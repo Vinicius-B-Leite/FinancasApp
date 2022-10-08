@@ -10,6 +10,7 @@ export default function AuthProvider({children}) {
 
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [loadingAuth, setLoadingAuth] = useState(false)
 
 
     useEffect(()=>{
@@ -27,6 +28,7 @@ export default function AuthProvider({children}) {
     }, [])
 
     async function singUp(email, password, nome){
+        setLoadingAuth(true)
         await firebase.auth().createUserWithEmailAndPassword(email, password).then( async (value) => {
             let uid = value.user.uid
             await firebase.database().ref('users').child(uid).set({
@@ -40,12 +42,16 @@ export default function AuthProvider({children}) {
                 }
                 setUser(data)
                 storageUser(data)
+                setLoadingAuth(false)
             })
 
+        }).catch(()=>{
+            setLoadingAuth(false)
         })
     }
 
     async function singIn(email, password){
+        setLoadingAuth(true)
         await firebase.auth().signInWithEmailAndPassword(email, password).then(async (value) => {
             let uid = value.user.uid
             await firebase.database().ref('users').child(uid).once('value').then((snapshot) => {
@@ -56,9 +62,11 @@ export default function AuthProvider({children}) {
                 }
                 setUser(data)
                 storageUser(data)
+                setLoadingAuth(false)
             })
         }).catch((error)=>{
             alert(error.code)
+            setLoadingAuth(false)
         })
     }
 
@@ -80,6 +88,7 @@ export default function AuthProvider({children}) {
             singUp,
             singIn,
             singout,
+            loadingAuth,
             loading,
             singned: !!user //se null ele fica false se tem coisa dentro ele fica true
         }}>

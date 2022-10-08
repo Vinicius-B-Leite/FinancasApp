@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, Text, View } from 'react-native';
 import { AuthContext } from '../../contexts/auth';
 import { Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, Link, LinkText } from '../SingIn/styles';
 
@@ -9,7 +9,7 @@ export default function SingUp() {
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { singUp } = useContext(AuthContext)
+  const { singUp, loadingAuth } = useContext(AuthContext)
 
   return (
     <Background>
@@ -49,7 +49,7 @@ export default function SingUp() {
         </AreaInput>
 
         <SubmitButton onPress={()=>singUp(email, password, nome)}>
-          <SubmitText>Cadastrar</SubmitText>
+          <SubmitText>{loadingAuth ? <ActivityIndicator size={20} color="#fff" /> : 'Cadastrar'}</SubmitText>
         </SubmitButton>
 
       </Container>

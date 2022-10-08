@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, Text, View } from 'react-native';
 import { Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, Link, LinkText } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/auth';
@@ -11,7 +11,7 @@ export default function SingIn() {
   const [password, setPassword] = useState('')
   const navigation = useNavigation()
 
-  const { singIn } = useContext(AuthContext)
+  const { singIn, loadingAuth } = useContext(AuthContext)
 
   return (
     <Background>
@@ -41,7 +41,7 @@ export default function SingIn() {
           />
         </AreaInput>
         <SubmitButton onPress={() => singIn(email, password)}>
-          <SubmitText>Acessar</SubmitText>
+          <SubmitText>{loadingAuth ? <ActivityIndicator size={24} color="#fff"/> : 'Acessar'}</SubmitText>
         </SubmitButton>
 
         <Link onPress={() => navigation.navigate('SingUp')}>
