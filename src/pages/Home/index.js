@@ -1,25 +1,48 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import { AuthContext } from '../../contexts/auth';
 import MenuHamburg from '../../components/MenuHamburg'
 import { Background, Container, Nome, Saldo, Title, List } from './styles'
 import HistoricoList from '../../components/HistoricoList';
+import firebase from '../../service/firebaseConnection'
+import { format } from 'date-fns';
 
 export default function Home() {
 
     const { user } = useContext(AuthContext)
-    const [historico, setHistorico] = useState([
-        {key: '1', tipo: 'receita', valor: 2000},
-        {key: '2', tipo: 'despesa', valor: 2000},
-        {key: '3', tipo: 'receita', valor: 2000},
-        {key: '4', tipo: 'despesa', valor: 10.99},
-    ])
+    const [historico, setHistorico] = useState([])
+    const [saldo, setSaldo] = useState(0)
+
+    useEffect(()=>{
+        async function loadList(){
+            await firebase.database().ref('users').child(user.uid).on('value', (snapshot)=>{
+                setSaldo(snapshot.val().saldo)
+            })
+
+            await firebase.database().ref('historico').child(user.uid)
+            .orderByChild('data').equalTo(format(new Date(), 'dd/MM/yy')).limitToLast(5).on('value', (snapshot) =>{
+                setHistorico([])
+
+                snapshot.forEach(i=>{
+                    console.log(i)
+                    let data = {
+                        key: i.key,
+                        tipo: i.val().tipo,
+                        valor: i.val().valor
+                    }
+                    setHistorico(oldHis => [...oldHis, data].reverse())
+                })
+            })
+        }
+        loadList()
+    }, [])
+
     return (
         <Background>
             <MenuHamburg />
             <Container>
                 <Nome>{user && user.nome}</Nome>
-                <Saldo>R$ 200,00</Saldo>
+                <Saldo>R$ {saldo.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}</Saldo>
             </Container>
 
             <Title>Últimas movimentações</Title>
