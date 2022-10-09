@@ -1,18 +1,21 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import firebase from './src/service/firebaseConnection'
+import React, { useContext } from 'react';
+import { StatusBar } from 'react-native';
 import Routes from './src/routes';
-import { NavigationContainer } from '@react-navigation/native';
+import { ThemeProvider } from 'styled-components/native';
+import Contexts from './src/contexts/index'
+import ThemeContextProvider, { ThemeContext } from './src/contexts/theme';
 import AuthProvider from './src/contexts/auth';
+import { useTheme } from 'styled-components/native';
+import { myTheme } from './src/theme';
+import { green } from './src/theme/green';
+import Templete from './src/Templete';
 
 export default function App() {
+
   return (
-    <NavigationContainer>
-      <AuthProvider>
-        <StatusBar translucent={true} backgroundColor='transparent'/>
-        <Routes />
-      </AuthProvider>
-    </NavigationContainer>
+    <Contexts>
+      <Templete/>
+    </Contexts>
   );
 }

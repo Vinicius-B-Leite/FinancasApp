@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Background = styled.View`
     flex: 1;
-    background-color: #131313;
+    background-color: ${props => props.theme.backgroundColor};
 `;
 export const Container = styled.KeyboardAvoidingView`
     flex: 1;
@@ -21,7 +21,7 @@ export const Input = styled.TextInput.attrs({
     background: rgba(0,0,0, 0.20);
     width: 90%;
     font-size: 17px;
-    color: #fff;
+    color: ${props => props.theme.color};
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 7px;
@@ -32,7 +32,7 @@ export const Input = styled.TextInput.attrs({
 export const SubmitButton = styled.TouchableOpacity`
     align-items: center;
     justify-content: center;
-    background-color: #00b94a;
+    background-color: ${props => props.theme.primary};
     width: 90%;
     height: 45px;
     border-radius: 7px;
@@ -41,13 +41,13 @@ export const SubmitButton = styled.TouchableOpacity`
 `;
 export const SubmitText = styled.Text`
     font-size: 20px;
-    color: #131313;
+    color: ${props => props.theme.backgroundColor};
 `;
 export const Link = styled.TouchableOpacity`
     margin-top: 5px;
     margin-bottom: 10px;
 `;
 export const LinkText = styled.Text`
-    color: #fff;
+    color: ${props => props.theme.color};
 `;
 

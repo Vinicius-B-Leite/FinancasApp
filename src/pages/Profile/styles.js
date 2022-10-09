@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.KeyboardAvoidingView`
     flex: 1;
-    background-color: #131313;
+    background-color: ${props => props.theme.backgroundColor};
     align-items: center;
 `
 export const ChangeContainer = styled.View`
@@ -13,7 +13,7 @@ export const ChangeContainer = styled.View`
     marginVertical: 5px;
 `
 export const Nome = styled.TextInput.attrs({
-    placeholderTextColor: '#fff'
+    placeholderTextColor: props => props.theme.color
 })`
     text-align: center;
     font-size: 32px;
@@ -22,7 +22,7 @@ export const Nome = styled.TextInput.attrs({
 `
 
 export const Email = styled.TextInput.attrs({
-    placeholderTextColor: '#fff'
+    placeholderTextColor: props => props.theme.color
 })`
     color: #fff;
     font-size: 18px;
@@ -32,14 +32,14 @@ export const RegistrorTotais = styled.Text`
     color: #fff;
 `
 export const Tema = styled.Text`
-    color: #fff;
+    color: ${props => props.theme.color};
     font-size: 18px;
 `
 
 export const NewLink = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
-    background-color: #00b94a;
+    background-color: ${props => props.theme.primary};
     width: 90%;
     height: 45px;
     border-radius: 10px;
@@ -53,13 +53,13 @@ export const NewText = styled.Text`
 export const Logout = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
-    background-color: #c62c36;
+    background-color: ${props => props.theme.secondary};
     width: 90%;
     height: 45px;
     border-radius: 10px;
 `
 export const LogoutText = styled.Text`
     font-size: 18px;
-    color: #fff;
+    color: ${props => props.theme.color};
     font-weight: bold;
 ` 

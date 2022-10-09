@@ -9,16 +9,18 @@ import { Picker } from '@react-native-picker/picker'
 import { FontAwesome } from '@expo/vector-icons';
 import firebase from '../../service/firebaseConnection';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemeContext } from '../../contexts/theme';
 
 
 export default function Perfil() {
   const { singout, user } = useContext(AuthContext)
+  const { changeTheme } = useContext(ThemeContext)
   const navigation = useNavigation()
 
   const [isEnableName, setIsEnableName] = useState(false)
   const [isEnableEmail, setIsEnableEmail] = useState(false)
 
-  const [pickerValue, setPickerValue] = useState('preto')
+  const [pickerValue, setPickerValue] = useState('verde')
 
   const [emailInput, setEmailInput] = useState(user.email)
   const [nameInput, setNameInput] = useState(user.nome)
@@ -100,8 +102,11 @@ export default function Perfil() {
             style={{ width: '40%', height: 5, backgroundColor: 'transparent', color: '#fff' }}
             dropdownIconColor='#fff'
             selectedValue={pickerValue}
-            onValueChange={(itemValue, itemIndex) => setPickerValue(itemValue)}>
-            <Picker.Item label='Preto' value='preto' />
+            onValueChange={(itemValue, itemIndex) => {
+              setPickerValue(itemValue)
+              changeTheme()
+            }}>
+            <Picker.Item label='Verde' value='verde' />
             <Picker.Item label='Roxo' value='roxo' />
           </Picker>
         </ChangeContainer>

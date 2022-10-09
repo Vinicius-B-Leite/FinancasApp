@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 export const Background = styled.View`
     flex: 1;
-    background-color: #131313;
+    background-color: ${props => props.theme.backgroundColor};
 `
 export const Input = styled.TextInput.attrs({
     placeholderTextColor: '#222'
@@ -20,7 +20,7 @@ export const SubmitButton = styled.TouchableOpacity`
     margin-top: 20px;
     align-items: center;
     justify-content: center;
-    background-color: #00b94a;
+    background-color:${props => props.theme.primary};
 `
 export const SubmitText = styled.Text`
     font-size: 22px;

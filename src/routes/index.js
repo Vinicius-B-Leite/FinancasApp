@@ -4,6 +4,7 @@ import AuthRoutes from "./auth.route";
 import AppRoutes from "./app.route";
 import { AuthContext } from "../contexts/auth";
 import { ActivityIndicator, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function Routes() {
     const { singned, loading } = useContext(AuthContext)
@@ -14,6 +15,9 @@ export default function Routes() {
         </View>
     }
     return (
-        singned ? <AppRoutes /> : <AuthRoutes />  
+        <NavigationContainer>
+            {singned ? <AppRoutes /> : <AuthRoutes />  }
+        </NavigationContainer>
+        
     )
 }
