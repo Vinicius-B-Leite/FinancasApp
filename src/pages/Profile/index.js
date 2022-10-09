@@ -4,7 +4,7 @@ import { AuthContext } from '../../contexts/auth'
 import { useNavigation } from '@react-navigation/native';
 import MenuHamburg from '../../components/MenuHamburg';
 import { AntDesign } from '@expo/vector-icons';
-import { Alert, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Platform, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
 import { FontAwesome } from '@expo/vector-icons';
 import firebase from '../../service/firebaseConnection';
@@ -14,10 +14,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Perfil() {
   const { singout, user } = useContext(AuthContext)
   const navigation = useNavigation()
+
   const [isEnableName, setIsEnableName] = useState(false)
   const [isEnableEmail, setIsEnableEmail] = useState(false)
+
   const [pickerValue, setPickerValue] = useState('preto')
+
   const [emailInput, setEmailInput] = useState(user.email)
+  const [nameInput, setNameInput] = useState(user.nome)
 
   function changeVerification(changeUserInformation) {
     Alert.alert(
@@ -37,19 +41,28 @@ export default function Perfil() {
   }
   async function changeUserEmail() {
     await AsyncStorage.getItem('_authUser').then(async (val) => {
+      
       let data = JSON.parse(val)
       let email = data.email
       let password = data.password
 
-      console.log(email, password)
       await firebase.auth().signInWithEmailAndPassword(email, password).then((value) => {
+
         value.user.updateEmail(emailInput).then(async() => {
           setIsEnableEmail(false)
           data['email'] = emailInput
           await AsyncStorage.setItem('_authUser', JSON.stringify(data))
-        }).then(() => alert('FOI'))
+        }).then(() => ToastAndroid.show('Sucesso em troca de email', ToastAndroid.SHORT))
       })
     })
+  }
+
+  async function changeUserName(){
+    await AsyncStorage.getItem('_authUser').then(async (val) => {
+      let data = JSON.parse(await val)
+      data['nome'] = nameInput
+      await AsyncStorage.setItem('_authUser', JSON.stringify(data))
+    }).then(()=>ToastAndroid.show('Sucesso em mudar o nome', ToastAndroid.SHORT))
   }
 
   return (
@@ -58,7 +71,13 @@ export default function Perfil() {
       <FontAwesome name="user-circle-o" size={70} color="#fff" />
 
       <ChangeContainer justifyContent='center'>
-        <Nome placeholder={user && user.nome} editable={isEnableName} />
+        <Nome 
+          placeholder={user && user.nome} 
+          editable={isEnableName}
+          onChangeText={txt => setNameInput(txt)}  
+          value={nameInput}
+          onEndEditing={() => changeVerification(changeUserName)}
+        />
         <TouchableOpacity onPress={() => setIsEnableName(!isEnableName)}><AntDesign name="edit" size={24} color="#fff" /></TouchableOpacity>
 
       </ChangeContainer>
