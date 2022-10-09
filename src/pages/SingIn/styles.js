@@ -25,6 +25,7 @@ export const Input = styled.TextInput.attrs({
     margin-bottom: 15px;
     padding: 10px;
     border-radius: 7px;
+    border: ${props => props.error && '1px'} solid ${props => props.error && 'red'}
 `;
 
 
@@ -51,3 +52,10 @@ export const LinkText = styled.Text`
     color: ${props => props.theme.color};
 `;
 
+export const Error = styled.Text`
+    color: red;
+    font-size: 13px;
+    align-self: flex-start;
+    padding-left: 20px;
+
+`

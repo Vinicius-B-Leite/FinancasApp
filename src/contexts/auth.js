@@ -27,22 +27,23 @@ export default function AuthProvider({children}) {
         loadingStorage()
     }, [])
 
-    async function singUp(email, password, nome){
+    async function singUp(data){
         setLoadingAuth(true)
-        await firebase.auth().createUserWithEmailAndPassword(email, password).then( async (value) => {
+        await firebase.auth().createUserWithEmailAndPassword(data.email, data.password).then( async (value) => {
             let uid = value.user.uid
+            console.log(uid)
             await firebase.database().ref('users').child(uid).set({
-                nome: nome,
+                nome: data.username,
                 saldo: 0,
             }).then(()=>{
-                let data = {
+                let newdata = {
                     uid: uid,
-                    nome: nome,
+                    nome: data.username,
                     email: value.user.email,
-                    password: password
+                    password:data.password
                 }
-                setUser(data)
-                storageUser(data)
+                setUser(newdata)
+                storageUser(newdata)
                 setLoadingAuth(false)
             })
 
@@ -51,19 +52,21 @@ export default function AuthProvider({children}) {
         })
     }
 
-    async function singIn(email, password){
+    async function singIn(data){
         setLoadingAuth(true)
-        await firebase.auth().signInWithEmailAndPassword(email, password).then(async (value) => {
+        await firebase.auth().signInWithEmailAndPassword(data.email, data.password).then(async (value) => {
             let uid = value.user.uid
             await firebase.database().ref('users').child(uid).once('value').then((snapshot) => {
-                let data = {
+                let newdata = {
                     uid,
                     nome: snapshot.val().nome,
-                    email: email,
-                    password: password
+                    email: data.email,
+                    password: data.password
                 }
-                setUser(data)
-                storageUser(data)
+                console.log(data)
+
+                setUser(newdata)
+                storageUser(newdata)
                 setLoadingAuth(false)
             })
         }).catch((error)=>{
