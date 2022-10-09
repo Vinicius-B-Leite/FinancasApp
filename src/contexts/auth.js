@@ -38,7 +38,8 @@ export default function AuthProvider({children}) {
                 let data = {
                     uid: uid,
                     nome: nome,
-                    email: value.user.email
+                    email: value.user.email,
+                    password: password
                 }
                 setUser(data)
                 storageUser(data)
@@ -58,7 +59,8 @@ export default function AuthProvider({children}) {
                 let data = {
                     uid,
                     nome: snapshot.val().nome,
-                    email: value.user.email
+                    email: email,
+                    password: password
                 }
                 setUser(data)
                 storageUser(data)
