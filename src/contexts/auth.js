@@ -31,7 +31,6 @@ export default function AuthProvider({children}) {
         setLoadingAuth(true)
         await firebase.auth().createUserWithEmailAndPassword(data.email, data.password).then( async (value) => {
             let uid = value.user.uid
-            console.log(uid)
             await firebase.database().ref('users').child(uid).set({
                 nome: data.username,
                 saldo: 0,
@@ -47,8 +46,9 @@ export default function AuthProvider({children}) {
                 setLoadingAuth(false)
             })
 
-        }).catch(()=>{
+        }).catch((error)=>{
             setLoadingAuth(false)
+            alert(error)
         })
     }
 

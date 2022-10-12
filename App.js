@@ -1,8 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useContext } from 'react';
-import { StatusBar } from 'react-native';
-import Routes from './src/routes';
-import { ThemeProvider } from 'styled-components/native';
+import React from 'react-native';
 import Contexts from './src/contexts/index'
 import ThemeContextProvider, { ThemeContext } from './src/contexts/theme';
 import AuthProvider from './src/contexts/auth';

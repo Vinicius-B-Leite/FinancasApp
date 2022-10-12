@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react';
 import { ActivityIndicator, Platform, Text, View } from 'react-native';
 import { AuthContext } from '../../contexts/auth';
 import { Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, Link, LinkText, Error } from '../SingIn/styles';
+
 import { useForm, Controller } from 'react-hook-form'
-import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 
 const schema = yup.object({
@@ -15,9 +16,6 @@ const schema = yup.object({
 
 export default function SingUp() {
 
-  // const [nome, setNome] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
