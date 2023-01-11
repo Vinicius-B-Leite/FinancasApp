@@ -26,6 +26,18 @@ Aqui está as tecnologias usadas no projeto
 ## Apresentação do app
   [![Clique para ver o vídeo]](github/vidma_recorder_12102022_151139.mp4)
 
+## Screenshots
+  ![cadastro](github/cadastro.jpg)
+  ![home](github/home.jpg)
+  ![home roxo](github/home%20tema%20roxo.jpg)
+  ![drawer roxo](github/drawer%20tema%20roxo.jpg)
+  ![gerar receita](github/gerar%20receita.jpg)
+  ![perfil](github/perfil.jpg)
+  ![calendario](github/calendario.jpg)
+
+
+
+
 ## Funcionalidades
 
 As principais funcionalidades são:
